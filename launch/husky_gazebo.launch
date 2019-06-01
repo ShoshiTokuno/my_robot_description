@@ -1,0 +1,18 @@
+<launch>
+  <include file="$(find my_robot_description)/launch/husky_park.launch"></include>
+  
+  <arg name="model" default="$(find my_robot_description)/urdf/robot.urdf"/>
+  <arg name="gui" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <param name="robot_description" textfile="$(arg model)"/>
+  <param name="use_gui" value="$(arg gui)"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+  <param name="robot_decription" type="str" textfile="$(find my_robot_description)/urdf/robot.urdf"/>
+  <include file="$(find my_robot_control)/launch/control.launch"/>
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model my_robot_description"/>
+</launch>
